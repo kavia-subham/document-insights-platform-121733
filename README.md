@@ -1,1 +1,3 @@
-# document-insights-platform-121733
+# Project Repository
+
+This is the initial README file for the project.
