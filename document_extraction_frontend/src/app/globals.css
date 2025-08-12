@@ -1,12 +1,25 @@
 @import "tailwindcss";
 
+/* Brand theme variables */
 :root {
-  --color-primary: #000000;
-  --color-secondary: #FFFFFF;
-  --color-accent: #3B82F6;
-  --color-background: #FFFFFF;
+  --color-primary: #4c3a82; /* deep purple */
+  --color-secondary: #ffffff;
+  --color-accent: #bca7ff; /* light purple */
+  --color-bg: #ffffff;
+  --color-text: #120f1a;
+  --ring: 0 0 0 3px var(--color-accent);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f0e13;
+    --color-text: #f7f7fb;
+    --color-secondary: #15131d;
+    --color-accent: #bca7ff;
+  }
+}
+
+/* Base resets */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -17,10 +30,35 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: var(--color-background);
-  color: var(--color-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Utility classes for focus/keyboard */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: .5rem;
+}
+
+/* Scrollbar styling for modern look */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--color-primary) 50%, transparent) transparent;
+}
+
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-primary) 50%, transparent);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
 }
