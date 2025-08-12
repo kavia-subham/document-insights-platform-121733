@@ -16,13 +16,13 @@ export default function UploadZone() {
   };
 
   return (
-    <div className="rounded-lg border border-dashed border-black/15 dark:border-white/15 bg-white/60 dark:bg-white/5 p-4">
-      <div className="flex items-center justify-between gap-2">
-        <div>
-          <div className="text-sm font-medium text-[var(--color-primary)] dark:text-white">Upload documents</div>
-          <p className="text-xs text-black/60 dark:text-white/60">Supported: PDF, DOCX</p>
+    <div className="rounded-xl border-2 border-dashed border-purple-200 dark:border-purple-800/50 bg-gradient-to-br from-purple-50/50 to-white/80 dark:from-purple-900/20 dark:to-gray-800/50 p-6 transition-all hover:border-purple-300 dark:hover:border-purple-700">
+      <div className="space-y-4">
+        <div className="text-center">
+          <div className="text-base font-semibold text-[var(--color-primary)] dark:text-white mb-2">Upload documents</div>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Drag & drop or click to select PDF, DOCX files</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex justify-center">
           <input
             ref={inputRef}
             type="file"
@@ -32,7 +32,7 @@ export default function UploadZone() {
             onChange={(e) => onFiles(e.target.files)}
           />
           <button
-            className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs text-white hover:opacity-90 focus-ring"
+            className="rounded-lg bg-gradient-to-r from-[var(--color-primary)] to-purple-600 px-6 py-3 text-sm font-medium text-white hover:shadow-lg hover:scale-105 focus-ring transition-all duration-200"
             onClick={() => inputRef.current?.click()}
           >
             Choose files

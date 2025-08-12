@@ -26,36 +26,56 @@ export default function CopilotChat({ docId }: { docId: string | "all" }) {
   };
 
   return (
-    <section aria-labelledby="copilot-title" className="rounded-lg border border-black/10 dark:border-white/10 p-4 h-full flex flex-col">
-      <div className="mb-2 flex items-center justify-between">
-        <h3 id="copilot-title" className="text-sm font-semibold">Copilot</h3>
-        <span className="text-[10px] text-black/60 dark:text-white/60">Ask questions about your documents</span>
+    <section aria-labelledby="copilot-title" className="card-container p-6 h-full flex flex-col">
+      <div className="mb-6 flex items-center justify-between">
+        <h3 id="copilot-title" className="text-lg font-semibold text-gray-900 dark:text-white">Copilot</h3>
+        <span className="text-sm text-gray-500 dark:text-gray-400">Ask questions about your documents</span>
       </div>
-      <div ref={scrollRef} className="flex-1 overflow-auto rounded-md bg-white dark:bg-white/5 p-3">
+      <div ref={scrollRef} className="flex-1 overflow-auto rounded-lg bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-800/50 dark:to-gray-900/50 p-4 mb-4 min-h-[250px]">
         {chats.length === 0 && (
-          <p className="text-xs text-black/60 dark:text-white/60">
-            Start by asking a question. For best results, extract your document first.
-          </p>
+          <div className="text-center py-12">
+            <div className="text-gray-400 text-4xl mb-4">💬</div>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+              Start a conversation with your document
+            </p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">
+              For best results, extract your document first
+            </p>
+          </div>
         )}
-        <div className="space-y-3">
+        <div className="space-y-4">
           {chats.map((m) => (
-            <div key={m.id} className={`max-w-[80%] rounded-lg px-3 py-2 text-xs ${m.role === "user" ? "ml-auto bg-[var(--color-accent)]/30" : "bg-black/5 dark:bg-white/10"}`}>
-              <div className="mb-1 font-medium">{m.role === "user" ? "You" : "Assistant"}</div>
-              <div className="whitespace-pre-wrap">{m.content}</div>
-              <div className="mt-1 text-[10px] text-black/50">{new Date(m.timestamp).toLocaleTimeString()}</div>
+            <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div className={`max-w-[85%] rounded-lg px-4 py-3 ${
+                m.role === "user" 
+                  ? "bg-gradient-to-r from-[var(--color-primary)] to-purple-600 text-white" 
+                  : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
+              }`}>
+                <div className="text-xs font-medium mb-2 opacity-80">
+                  {m.role === "user" ? "You" : "Assistant"}
+                </div>
+                <div className="text-sm whitespace-pre-wrap leading-relaxed">{m.content}</div>
+                <div className="text-xs mt-2 opacity-60">
+                  {new Date(m.timestamp).toLocaleTimeString()}
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
-      <form onSubmit={onAsk} className="mt-3 flex items-center gap-2">
+      <form onSubmit={onAsk} className="flex items-center gap-3">
         <input
           aria-label="Ask a question"
-          className="flex-1 rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm focus-ring"
+          className="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-4 py-3 text-sm focus-ring placeholder-gray-400 dark:placeholder-gray-500"
           placeholder="Ask about the selected document..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button className="rounded-md bg-[var(--color-primary)] px-3 py-2 text-xs text-white hover:opacity-90 focus-ring" type="submit">
+        <button 
+          className="rounded-lg bg-gradient-to-r from-[var(--color-primary)] to-purple-600 px-6 py-3 text-sm font-medium text-white hover:shadow-lg hover:scale-105 focus-ring transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed" 
+          type="submit"
+          disabled={!input.trim()}
+        >
           Ask
         </button>
       </form>

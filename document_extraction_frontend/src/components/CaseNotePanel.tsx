@@ -35,28 +35,43 @@ export default function CaseNotePanel({ docId }: { docId: string }) {
   };
 
   return (
-    <section aria-labelledby="case-note-title" className="rounded-lg border border-black/10 dark:border-white/10 p-4">
-      <div className="mb-2 flex items-center justify-between">
-        <h3 id="case-note-title" className="text-sm font-semibold">Case note</h3>
-        <div className="flex items-center gap-2">
-          <button className="rounded-md border px-2 py-1 text-xs hover:bg-black/5 focus-ring" onClick={onGenerate}>
+    <section aria-labelledby="case-note-title" className="card-container p-6 h-full flex flex-col">
+      <div className="mb-6 flex items-center justify-between">
+        <h3 id="case-note-title" className="text-lg font-semibold text-gray-900 dark:text-white">Case note</h3>
+        <div className="flex items-center gap-3">
+          <button 
+            className="rounded-lg border border-gray-200 dark:border-gray-600 px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus-ring transition-colors" 
+            onClick={onGenerate}
+          >
             Generate
           </button>
-          <button className="rounded-md border px-2 py-1 text-xs hover:bg-black/5 focus-ring" onClick={onSave}>
+          <button 
+            className="rounded-lg border border-gray-200 dark:border-gray-600 px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus-ring transition-colors" 
+            onClick={onSave}
+          >
             Save
           </button>
-          <button className="rounded-md border px-2 py-1 text-xs hover:bg-black/5 focus-ring" onClick={onCopy}>
-            {copied ? "Copied" : "Copy"}
+          <button 
+            className={`rounded-lg border px-4 py-2 text-sm focus-ring transition-colors ${
+              copied 
+                ? "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300" 
+                : "border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+            }`} 
+            onClick={onCopy}
+          >
+            {copied ? "✓ Copied" : "Copy"}
           </button>
         </div>
       </div>
-      <textarea
-        aria-label="Case note editor"
-        className="min-h-[160px] w-full rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 p-2 text-sm focus-ring"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Click Generate to create a case note, or write your own summary here..."
-      />
+      <div className="flex-1">
+        <textarea
+          aria-label="Case note editor"
+          className="w-full h-full min-h-[200px] rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 text-sm focus-ring resize-none leading-relaxed"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="Click Generate to automatically create a case note, or write your own summary here..."
+        />
+      </div>
     </section>
   );
 }

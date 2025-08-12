@@ -20,9 +20,13 @@ export default function DocumentList() {
   const { documents, selectedDocId, selectDocument, removeDocument } = useApp();
 
   return (
-    <div className="space-y-2" role="list" aria-label="Uploaded documents">
+    <div className="space-y-3" role="list" aria-label="Uploaded documents">
       {documents.length === 0 && (
-        <p className="text-xs text-black/60 dark:text-white/60">No documents yet. Upload to get started.</p>
+        <div className="text-center py-8">
+          <div className="text-gray-400 text-4xl mb-3">📄</div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">No documents yet</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Upload files to get started</p>
+        </div>
       )}
       {documents.map((doc) => {
         const isActive = selectedDocId === doc.id;
@@ -30,33 +34,37 @@ export default function DocumentList() {
           <div
             key={doc.id}
             role="listitem"
-            className={`group flex items-center justify-between rounded-md border px-3 py-2 text-sm ${
+            className={`group rounded-lg border transition-all duration-200 ${
               isActive
-                ? "border-[var(--color-primary)] bg-[var(--color-accent)]/20"
-                : "border-black/10 dark:border-white/10 hover:bg-black/5"
+                ? "border-[var(--color-primary)] bg-gradient-to-r from-[var(--color-accent)]/15 to-purple-100/30 dark:to-purple-900/20 shadow-sm"
+                : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50/50 dark:hover:bg-gray-800/30"
             }`}
           >
             <button
-              className="flex-1 text-left focus-ring"
+              className="w-full text-left p-4 focus-ring rounded-lg"
               onClick={() => selectDocument(doc.id)}
               aria-pressed={isActive}
             >
-              <div className="flex items-center gap-2">
-                <span className="truncate">{doc.name}</span>
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <span className="font-medium text-sm text-gray-900 dark:text-white truncate flex-1">{doc.name}</span>
                 <StatusBadge status={doc.status} />
               </div>
-              <div className="text-[10px] text-black/60 dark:text-white/60">
-                {(doc.size / 1024).toFixed(1)} KB • {doc.type.toUpperCase()}
+              <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                <span>{(doc.size / 1024).toFixed(1)} KB</span>
+                <span>•</span>
+                <span>{doc.type.toUpperCase()}</span>
               </div>
             </button>
-            <button
-              aria-label={`Remove ${doc.name}`}
-              className="ml-2 rounded-md p-1 text-xs text-black/70 hover:bg-black/5 focus-ring"
-              onClick={() => removeDocument(doc.id)}
-              title="Remove"
-            >
-              🗑
-            </button>
+            <div className="px-4 pb-3">
+              <button
+                aria-label={`Remove ${doc.name}`}
+                className="text-xs text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded px-2 py-1 transition-colors"
+                onClick={() => removeDocument(doc.id)}
+                title="Remove document"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         );
       })}
